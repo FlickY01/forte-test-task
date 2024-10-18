@@ -38,7 +38,7 @@ function Weather() {
           {loading && <Loading/>}
           {error && <ErrorMessage message={error} />}
           {data && <WeatherDetails data={data} />}
-          {forecast && !error && (
+          {forecast && !error && !loading && (
             <div className='forecast-wrapper'>
               <FiveDayForecast forecast={forecast} />
             </div>
