@@ -1,45 +1,54 @@
-import { createSlice } from '@reduxjs/toolkit';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeather } from '../weather/weatherSlice';
+import FavoriteToggle from './FavoriteToggle';
 
-const loadFromLocalStorage = () => {
-  try {
-    const serializedState = localStorage.getItem('favorites');
-    return serializedState ? JSON.parse(serializedState) : [];
-  } catch (e) {
-    console.warn('Error:', e);
-    return [];
-  }
+//utils
+import { convertKelvinToCelsius } from '../../utils/convertTemperature';
+
+//styles
+import '../../styles/features/favorite/favorite-list.scss'
+
+const FavoriteList = () => {
+    const dispatch = useDispatch();
+    const favorites = useSelector((state) => state.favorites);
+    const cityWeather = useSelector((state) => state.weather.cityWeather);
+
+    useEffect(() => {
+        if (favorites.length) {
+            favorites.forEach(city => {
+                if (!cityWeather[city]) {
+                    dispatch(fetchWeather(city));
+                }
+            });
+        }
+    }, [favorites, dispatch, cityWeather]);
+
+    return (
+        <div className='favorite-cities-wrapper'>
+            <h3>Favorite cities:</h3>
+            <div className='favorite-city-wrapper'>
+              {favorites.map((city) => (
+                  <div key={city} className='favorite-city'>
+                      <h3>{city}</h3>
+                      <div className='favorite-city-content'>
+                        <div className='favorite-city-weather'>
+                          {cityWeather[city] && (
+                              <>
+                                <p>Temperature: {convertKelvinToCelsius(cityWeather[city].main.temp)}°C</p>
+                                <p>Humidity: {cityWeather[city].main.humidity}%</p>
+                                <p>Wind speed: {cityWeather[city].wind.speed} m/s</p>
+                              </>
+                            )}
+                        </div>
+                        <FavoriteToggle city={city} />
+                      </div>
+                  </div>
+              ))}
+
+            </div>
+        </div>
+    );
 };
 
-const saveToLocalStorage = (state) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem('favorites', serializedState);
-  } catch (e) {
-    console.warn('Error:', e);
-  }
-};
-
-const favoritesSlice = createSlice({
-  name: 'favorites',
-  initialState: loadFromLocalStorage(),
-  reducers: {
-    addFavorite: (state, action) => {
-      if (!state.includes(action.payload)) {
-        state.push(action.payload);
-        saveToLocalStorage(state);
-      }
-    },
-    removeFavorite: (state, action) => {
-      const index = state.indexOf(action.payload);
-      if (index !== -1) {
-        state.splice(index, 1);
-      }
-    
-      saveToLocalStorage(state);
-    },
-  },
-});
-
-export const { addFavorite, removeFavorite } = favoritesSlice.actions;
-
-export default favoritesSlice.reducer;
+export default FavoriteList;

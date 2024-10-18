@@ -1,3 +1,4 @@
+//components
 import Weather from './features/weather/Weather';
 
 //styles
