@@ -1,0 +1,29 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Red Hat Text", sans-serif;
+}
+body{
+  	background-color: #b0b0b0;
+
+	.container{
+		margin: 50px auto;
+		width: 400px;
+		height: 800;
+
+		@media (min-width: 650px) {
+			width: 600px;
+		}
+
+		@media (min-width: 850px) {
+			width: 800px;
+		}
+
+		@media (min-width: 1250px) {
+			width: 1200px;
+		}
+  	}
+	
+}
+

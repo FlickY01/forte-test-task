@@ -1,0 +1,33 @@
+.choose-city-form{
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+
+    .choose-city-input{
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #d1d1d1;
+        font-size: 14px;
+        font-weight: 500;
+
+        &::placeholder{
+            font-size: 14px;
+            font-weight: 500;
+        }
+        &:focus-visible{
+            outline :1px solid #2b20f5;
+        }
+    }
+    .submit-button{
+        background-color: #2b20f5;
+        border: 0;
+        border-radius: 10px;
+        padding: 15px 10px;
+        
+        p{
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    }
+}

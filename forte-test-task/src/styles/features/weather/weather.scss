@@ -1,0 +1,28 @@
+.content-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .weather-wrapper{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 20px;
+		box-shadow: -1px 4px 15px -1px rgba(66, 68, 90, 1);
+
+        .weather{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            @media (min-width: 850px) {
+                flex-direction: row;
+            }
+        }
+    }
+    .favorite-list-wrapper{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 20px;
+		box-shadow: -1px 4px 15px -1px rgba(66, 68, 90, 1);
+    }
+}
