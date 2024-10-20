@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchWeather } from './weatherSlice';
+import { fetchWeather, fetchForecast } from './weatherSlice';
 
 //styles
 import '../../styles/features/weather/weather-form.scss'
@@ -12,6 +12,7 @@ function WeatherForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(fetchWeather(city));
+    dispatch(fetchForecast(city));
   };
 
   return (
